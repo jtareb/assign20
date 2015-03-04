@@ -7,6 +7,8 @@
   .controller('NavCtrl', ['$scope', 'UserFactory', 
 
     function ($scope, UserFactory) {
+
+      console.log('here');
     
       var user = UserFactory.user();
 
