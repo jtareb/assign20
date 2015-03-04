@@ -8,8 +8,8 @@
     URL: 'https://api.parse.com/1/',
     CONFIG: {
       headers : {
-        'X-Parse-Application-Id' : 'QPhfi521jPOVih27xiiqooP9B2egqpLjKSbRDI2H',
-        'X-Parse-REST-API-Key'  : '13hAN2gWrhn6RmijJ3TnZp8RRq7GkvBffVCKRvo4',
+        'X-Parse-Application-Id' : 'TGTGRdNU2m3wCWDbM8An5C6wRsoUWDBhXlwFKsAO',
+        'X-Parse-REST-API-Key'  : 'AqghD34BhsCJmyOpdGrUcTahmXL7hFzXoFP4cgf0',
         'Content-Type' : 'application/json'
       }
     } 
