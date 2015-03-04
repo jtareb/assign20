@@ -2,7 +2,7 @@
   
   'use strict';
 
-  angular.module('Top5', ['ngRoute', 'ngCookies', 'T5User'])
+  angular.module('Top5', ['ngRoute', 'ngCookies'])
 
   .constant('PARSE', {
     URL: 'https://api.parse.com/1/',
