@@ -14,46 +14,52 @@
       }
      }) 
 
-    .config(['$routeProvider', function ($routeProvider) {
+    .config([ '$routeProvider', function ($routeProvider) {
 
-        $routeProvider
-          .when('/' , {
-            templateUrl: 'scripts/lists/lists.home.tpl.html',
-            controller: 'ListCtrl'
-          })
+    $routeProvider
 
-          .when('/login', {
-            templateUrl: 'scripts/users/user.login.tpl.html',
-            controller: 'UserCtrl'
-          })
+    // Home Page | List of Lists
+    .when('/', {
+      templateUrl: 'scripts/lists/lists.home.tpl.html',
+      controller: 'ListCtrl'
+    })
 
-          .when('/register', {
-            template.Url: 'scripts/users/user.register.tpl.html',
-            controller: 'UserCtrl'
-          })
+    // Login Page
+    .when('/login', {
+      templateUrl: 'scripts/users/user.login.tpl.html',
+      controller: 'UserCtrl'
+    })
 
-          .when('/lists/:id', {
-            templateUrl: 'scripts/items/items.list.tpl.html',
-            controller: 'ItemsCtrl'
-          })
+    // Register page
+    .when('/register', {
+      templateUrl: 'scripts/users/user.register.tpl.html',
+      controller: 'UserCtrl'
+    })
 
-          .otherwise('/');
+    // Single List Page
+    .when('/lists/:id', {
+      templateUrl: 'scripts/items/items.list.tpl.html',
+      controller: 'ItemsCtrl'
+    })
 
-        }])
+    // Go Home ET
+    .otherwise('/');
+    
+  }])
 
-     .run(['$rootScope', 'UserFactory', 'PARSE',
-        function ($rootScope, UserFactory, PARSE) {
+  .run([ '$rootScope', 'UserFactory', 'PARSE',
 
-          $rootScope.$on('$routeChangeStart', function () {
+    function ($rootScope, UserFactory, PARSE) {
 
-              UserFactory.status();
-          })
+      $rootScope.$on('$routeChangeStart', function () {
+        
+        // Run my Login Status
+        UserFactory.status();
 
-         }         
-        })
+      })
+    
+   }
 
-          
-
+  ])
 
 }());
-
