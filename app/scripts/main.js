@@ -15,7 +15,11 @@
     } 
   })
 
-   // Home Page | List of Lists
+  .config([ '$routeProvider', function ($routeProvider) {
+
+    $routeProvider
+
+    // Home Page | List of Lists
     .when('/', {
       templateUrl: 'scripts/lists/lists.home.tpl.html',
       controller: 'ListCtrl'
