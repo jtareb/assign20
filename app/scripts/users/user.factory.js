@@ -2,7 +2,7 @@
   
   'use strict';
 
-  angular.module('Top5')
+  angular.module('T5User')
 
   .factory('UserFactory', ['$http', 'PARSE', '$cookieStore', '$location',
 
@@ -38,9 +38,7 @@
           url: PARSE.URL + 'login',
           headers: PARSE.CONFIG.headers,
           params: userObj
-          
-          })
-          .then (function (res) {
+        }).then (function (res) {
           console.log(res);
           $cookieStore.put('currentUser', res.data);
         });
