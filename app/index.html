@@ -23,27 +23,27 @@
     <!-- endbuild -->
   </head>
   <body>
-
          <nav class="top-bar" data-topbar role="navigation" ng-controller="NavCtrl">
-            <ul class="title-area">
+           <ul class="title-area">
                 <li class="name">
-                <h1><a href="#/">Top 5 Lists</a></h1>
+                    <h1><a href="#/">Top 5 Lists</a></h1>
                 </li>
             </ul>
       
-          <section class="top-bar-section">
+            <section class="top-bar-section">
         <!-- Right Nav Section -->
-            <ul class="right">
-                <li><a ng-hide="loggedin" href="#/login">Login</a></li>
-                <li><a ng-hide="loggedin" href="#/register">Register</a></li>
-                <li><a ng-show="loggedin" href="#" ng-click="logout()">Logout</a></li>
-            </ul>
-          </section>
-        </nav>
+                <ul class="right">
+                    <li><a ng-hide="loggedin" href="#/login">Login</a></li>
+                    <li><a ng-hide="loggedin" href="#/register">Register</a></li>
+                    <li><a ng-show="loggedin" href="#" ng-click="logout()">Logout</a></li>
+                </ul>
+            </section>
+         </nav>
 
     <div class="container row">
       <div class="large-12 columns" ng-view></div>
     </div>
+
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
