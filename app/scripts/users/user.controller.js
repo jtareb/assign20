@@ -1,31 +1,32 @@
-;(function (){
-  
-  'use strict';
+;(function () {
 
-  angular.module('T5User', ['ngRoute', 'ngCookies'])
+	'use strict'
 
-  .controller('UserCtrl', ['$scope', 'UserFactory', '$location', 
+	angular.module('User',['ngRoute', 'ngCookies'])
 
-    function ($scope, UserFactory, $location) {
+	.controller('UserCtrl',['$scope','UserFactory', '$location',
 
-      // If Currently Logged in - Leave this controller
-      var user = UserFactory.user();
-      if (user) {
-        return $location.path('/');
-      }
+		function ($scope, UserFactory, $locaiton) {
 
-      // Add a new user
-      $scope.registerUser = function (userObj) {
-        UserFactory.register(userObj);
-      };
+			var user = UserFactory.user();
+			if(user) {
+				return $location.path('/');
 
-      // Login Method
-      $scope.loginUser = function (userObj) {
-        UserFactory.login(userObj);
-      };
-    
-    }
+			}
 
-  ]);
+			$scope.register.User = function (userObj) {
+				UserFactory.register(userObj);
+			};
+
+			$scope.loginUser = function(usrObj) {
+				UserFactory.login(userObj);
+			};
+
+
+		}
+
+	]);
+
 
 }());
+

@@ -1,66 +1,39 @@
-;(function (){
-  
-  'use strict';
+;(function () {
 
-  angular.module('T5User')
+	'use strict'
 
-  .factory('UserFactory', ['$http', 'PARSE', '$cookieStore', '$location',
+	angular.module('User')
 
-    function ($http, PARSE, $cookieStore, $location) {
-    
-      // Get Current User
-      var currentUser = function () {
-        return $cookieStore.get('currentUser');
-      };
+		.factory('UserFactory', ['$http', 'PARSE', '$cookieStore', '$location',
 
-      // Check User Status
-      var checkLoginStatus = function () {
-        var user = currentUser();
-        if (user) {
-          PARSE.CONFIG.headers['X-PARSE-Session-Token'] = user.sessionToken;
-        }
-      };
+			function ($http, PARSE, $cookieStore, $location) {
 
-      // Add a new User
-      var addUser = function (userObj) {
-        $http.post(PARSE.URL + 'users', userObj, PARSE.CONFIG)
-          .then( function (res) {
-            console.log(res);
-          }
-        );
-      };
+				var currentUser = function () {
+					return $cookieStore.get('currentUser');
+				};
+			
+				var checkLoginStatus = function () {
+					var user = currentUser();
+					if (user) {
+						 PARSE.CONFIG.headers['X-PARSE-Session-Token'] = user.sessionToken;
+				  }
+				};
 
-      // Log in a User
-      var loginUser = function (userObj) {
+				var addUser = function(userObj) {
+					 $http.post(PARSE.URL + 'users', userObj, PARSE.CONFIG)
+					 .then( function (res) {
+					 	//console.log(res)
+					 }
+				};
+			};
 
-        $http({
-          method: 'GET',
-          url: PARSE.URL + 'login',
-          headers: PARSE.CONFIG.headers,
-          params: userObj
-        }).then (function (res) {
-          console.log(res);
-          $cookieStore.put('currentUser', res.data);
-        });
-        
-      };
+				
 
-      // Logout Method
-      var logoutUser = function () {
-        $cookieStore.remove('currentUser');
-        $location.path('/login');
-      }
-  
-      return {
-        register : addUser, 
-        login : loginUser,
-        user : currentUser,
-        status : checkLoginStatus,
-        logout : logoutUser
-      };
 
-    }
 
-  ]);
+
+
+
+
 
 }());
