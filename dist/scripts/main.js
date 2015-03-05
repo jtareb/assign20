@@ -5,7 +5,7 @@
   .constant('PARSE', {
     
     URL:'https://api.parse.com/1/',
-    CONGIG: {
+    CONFIG: {
       headers: {
           'X-Parse-Application-Id': 'TGTGRdNU2m3wCWDbM8An5C6wRsoUWDBhXlwFKsAO',
           'X-Parse-REST-API-Key':   'AqghD34BhsCJmyOpdGrUcTahmXL7hFzXoFP4cgf0',
@@ -14,52 +14,58 @@
       }
      }) 
 
-    .config(['$routeProvider', function ($routeProvider) {
+    .config([ '$routeProvider', function ($routeProvider) {
 
-        $routeProvider
-          .when('/' , {
-            templateUrl: 'scripts/lists/lists.home.tpl.html',
-            controller: 'ListCtrl'
-          })
+    $routeProvider
 
-          .when('/login', {
-            templateUrl: 'scripts/users/user.login.tpl.html',
-            controller: 'UserCtrl'
-          })
+    // Home Page | List of Lists
+    .when('/', {
+      templateUrl: 'scripts/lists/lists.home.tpl.html',
+      controller: 'ListCtrl'
+    })
 
-          .when('/register', {
-            template.Url: 'scripts/users/user.register.tpl.html',
-            controller: 'UserCtrl'
-          })
+    // Login Page
+    .when('/login', {
+      templateUrl: 'scripts/users/user.login.tpl.html',
+      controller: 'UserCtrl'
+    })
 
-          .when('/lists/:id', {
-            templateUrl: 'scripts/items/items.list.tpl.html',
-            controller: 'ItemsCtrl'
-          })
+    // Register page
+    .when('/register', {
+      templateUrl: 'scripts/users/user.register.tpl.html',
+      controller: 'UserCtrl'
+    })
 
-          .otherwise('/');
+    // Single List Page
+    .when('/lists/:id', {
+      templateUrl: 'scripts/items/items.list.tpl.html',
+      controller: 'ItemsCtrl'
+    })
 
-        }])
+    // Go Home ET
+    .otherwise('/');
+    
+  }])
 
-     .run(['$rootScope', 'UserFactory', 'PARSE',
-        function ($rootScope, UserFactory, PARSE) {
+  .run([ '$rootScope', 'UserFactory', 'PARSE',
 
-          $rootScope.$on('$routeChangeStart', function () {
+    function ($rootScope, UserFactory, PARSE) {
 
-              UserFactory.status();
-          })
+      $rootScope.$on('$routeChangeStart', function () {
+        
+        // Run my Login Status
+        UserFactory.status();
 
-         }         
-        })
+      })
+    
+   }
 
-          
-
+  ])
 
 }());
-
-
 ;(function (){
   
+
   'use strict';
 
   angular.module('Top5')
@@ -67,6 +73,8 @@
   .controller('NavCtrl', ['$scope', 'UserFactory', 
 
     function ($scope, UserFactory) {
+
+      
     
       var user = UserFactory.user();
 
@@ -87,77 +95,104 @@
 
   ])
 
-}());
-;(function () {
-
-	'use strict'
-
-	angular.module('Top5',['ngRoute', 'ngCookies'])
-
-	.controller('UserCtrl',['$scope','UserFactory', '$location',
-
-		function ($scope, UserFactory, $locaiton) {
-
-			var user = UserFactory.user();
-			if(user) {
-				return $location.path('/');
-
-			}
-
-			$scope.register.User = function (userObj) {
-				UserFactory.register(userObj);
-			};
-
-			$scope.loginUser = function(usrObj) {
-				UserFactory.login(userObj);
-			};
-
-
-		}
-
-	]);
 
 
 }());
+;(function (){
+  
+  'use strict';
 
+  angular.module('Top5')
 
-;(function () {
+  .controller('UserCtrl', ['$scope', 'UserFactory', '$location', 
 
-	'use strict'
+    function ($scope, UserFactory, $location) {
 
-	angular.module('Top5')
+      // If Currently Logged in - Leave this controller
+      var user = UserFactory.user();
+      if (user) {
+        return $location.path('/');
+      }
 
-		.factory('UserFactory', ['$http', 'PARSE', '$cookieStore', '$location',
+      // Add a new user
+      $scope.registerUser = function (userObj) {
+        UserFactory.register(userObj);
+      };
 
-			function ($http, PARSE, $cookieStore, $location) {
+      // Login Method
+      $scope.loginUser = function (userObj) {
+        UserFactory.login(userObj);
+      };
+    
+    }
 
-				var currentUser = function () {
-					return $cookieStore.get('currentUser');
-				};
-			
-				var checkLoginStatus = function () {
-					var user = currentUser();
-					if (user) {
-						 PARSE.CONFIG.headers['X-PARSE-Session-Token'] = user.sessionToken;
-				  }
-				};
+  ]);
 
-				var addUser = function(userObj) {
-					 $http.post(PARSE.URL + 'users', userObj, PARSE.CONFIG)
-					 .then( function (res) {
-					 	//console.log(res)
-					 }
-				};
-			};
+}());
+;(function (){
+  
+  'use strict';
 
-				
+  angular.module('Top5')
 
+  .factory('UserFactory', ['$http', 'PARSE', '$cookieStore', '$location',
 
+    function ($http, PARSE, $cookieStore, $location) {
+    
+      // Get Current User
+      var currentUser = function () {
+        return $cookieStore.get('currentUser');
+      };
 
+      // Check User Status
+      var checkLoginStatus = function () {
+        var user = currentUser();
+        if (user) {
+          PARSE.CONFIG.headers['X-PARSE-Session-Token'] = user.sessionToken;
+        }
+      };
 
+      // Add a new User
+      var addUser = function (userObj) {
+        $http.post(PARSE.URL + 'users', userObj, PARSE.CONFIG)
+          .then( function (res) {
+            console.log(res);
+          }
+        );
+      };
 
+      // Log in a User
+      var loginUser = function (userObj) {
 
+        $http({
+          method: 'GET',
+          url: PARSE.URL + 'login',
+          headers: PARSE.CONFIG.headers,
+          params: userObj
+        }).then (function (res) {
+          console.log(res);
+          $cookieStore.put('currentUser', res.data);
+        });
+        
+      };
 
+      // Logout Method
+      var logoutUser = function () {
+        $cookieStore.remove('currentUser');
+        $location.path('/login');
+      }
+  
+      return {
+        register : addUser, 
+        login : loginUser,
+        user : currentUser,
+        status : checkLoginStatus,
+        logout : logoutUser
+      };
+
+    }
+
+  ]);
 
 }());
 ;(function (){
