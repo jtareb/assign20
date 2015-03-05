@@ -5,8 +5,7 @@
 <hr>
 <h4>Add New Item</h4>
 <form ng-submit="addItem(item)">
-  <input ng-model="item.title" type="text" placeholder="Item Title">
+  <input ng-model="item.title" type="text" placeholder="Item Title"> <br />
+  <textarea ng-model="item.desc" placeholder="Item Description"></textarea><br />
   <button>Add Item</button>
-  <input ng-model="item.desc" type="text" placeholder="Item Description">
-  <button>Add Description</button>
 </form>
