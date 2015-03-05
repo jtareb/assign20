@@ -1,5 +1,6 @@
 ;(function (){
   
+
   'use strict';
 
   angular.module('Top5')
@@ -8,7 +9,7 @@
 
     function ($scope, UserFactory) {
 
-      console.log('here');
+      
     
       var user = UserFactory.user();
 
@@ -28,5 +29,7 @@
     }
 
   ])
+
+
 
 }());
