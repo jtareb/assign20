@@ -17,15 +17,14 @@
         });
       };
 
-      var addList = function (listObj) {
-        // Add User Pointer to my list object
-        listObj.user = {
-          __type: 'Pointer',
-          className: '_User',
-          objectId: user.objectId
-        }
+       $scope.addList = function (listObj) {
+        $scope.list = {};
+        ListsFactory.add(listObj).success( function (results) {
+          listObj.objectId = results.objectId;
+          $scope.lists.push(listObj);
+          cache.remove('https://api.parse.com/1/classes/Lists');
+        });
 
-        // Set up Access Control
         var ACLObj = {};
         ACLObj[user.objectId] = {
           'read' : true,
