@@ -212,8 +212,7 @@
       ListsFactory.get().success( function (response) {
         $scope.lists = response.results;
       });
-    
-      $scope.addList = function (listObj) {
+        $scope.addList = function (listObj) {
         $scope.list = {};
         ListsFactory.add(listObj).success( function (results) {
           listObj.objectId = results.objectId;
@@ -252,16 +251,13 @@
           cache: true
         });
       };
-
-      var addList = function (listObj) {
-        // Add User Pointer to my list object
+       var addList = function (listObj) {
         listObj.user = {
           __type: 'Pointer',
           className: '_User',
           objectId: user.objectId
         }
 
-        // Set up Access Control
         var ACLObj = {};
         ACLObj[user.objectId] = {
           'read' : true,
