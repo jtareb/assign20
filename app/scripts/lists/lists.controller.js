@@ -15,8 +15,7 @@
       ListsFactory.get().success( function (response) {
         $scope.lists = response.results;
       });
-    
-      $scope.addList = function (listObj) {
+        $scope.addList = function (listObj) {
         $scope.list = {};
         ListsFactory.add(listObj).success( function (results) {
           listObj.objectId = results.objectId;
