@@ -2,7 +2,7 @@
   
   'use strict';
 
-  angular.module('Top5')
+  angular.module('Airplanes')
 
   .factory('UserFactory', ['$http', 'PARSE', '$cookieStore', '$location',
 

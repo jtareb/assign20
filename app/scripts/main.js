@@ -1,6 +1,6 @@
 ;(function () {
 
-  angular.module('Top5', ['ngRoute', 'ngCookies'])
+  angular.module('Airplanes', ['ngRoute', 'ngCookies'])
 
   .constant('PARSE', {
     
@@ -47,14 +47,16 @@
     
   }])
 
-  .run([ '$rootScope', 'UserFactory', 'PARSE',
+  .run([ '$rootScope', 'UserFactory', 'SERVER',
 
-    function ($rootScope, UserFactory, PARSE) {
+    function ($rootScope, UserFactory, SERVER) {
+      console.log('here');
 
       $rootScope.$on('$routeChangeStart', function () {
         
         // Run my Login Status
         UserFactory.status();
+        
 
       })
     

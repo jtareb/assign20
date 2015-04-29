@@ -2,7 +2,7 @@
   
   'use strict';
 
-  angular.module('Top5')
+  angular.module('Airplanes')
 
   .controller('UserCtrl', ['$scope', 'UserFactory', '$location', 
 
